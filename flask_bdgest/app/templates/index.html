@@ -1,0 +1,67 @@
+{#
+
+The main page of the search engine. It displays all three forms (author, series, comic).
+
+The forms are produced with a Jinja macro written in the macros.html template file.
+The form inputs for each form are first specified in a list variable declared in the Jinja.
+Then it is fed to the Jinja macro.
+
+#}
+
+{% from "macros.html" import render_form %}
+
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row center"><h2 class="green-text"></h2></div>
+    <!--ㅋㅋㅋㅋㅋㅋㅋㅋ-->
+    <!-- малыш -->
+    <div class="row">
+
+
+
+        <div class="col l4 s12">
+
+        {% set list = [[author_form.name.label, author_form.name(size=20)],
+                        [author_form.country.label, author_form.country(size=20)]] %}
+
+        {{ render_form("Author", url_for('author'), author_form.hidden_tag(), author_form.search, list)}}
+        </div>
+
+        <div class="col l4 s12">
+
+        {% set list = [[series_form.name.label, series_form.name(size=20)],
+                        [series_form.author_name.label, series_form.author_name(size=20)],
+                        [series_form.genre.label, series_form.genre(size=20)],
+                        [series_form.lang.label, series_form.lang(size=20)],
+                        [series_form.origin.label, series_form.origin(size=20)]] %}
+
+        {{ render_form("Series", url_for('series'), series_form.hidden_tag(), series_form.search, list)}}
+        </div>
+
+        <div class="col l4 s12">
+
+        {% set list = [[comic_form.title.label, comic_form.title(size=20)],
+                        [comic_form.author_name.label, comic_form.author_name(size=20)],
+                        [comic_form.series_name.label, comic_form.series_name(size=20)],
+                        [comic_form.editor.label, comic_form.editor(size=20)],
+                        [comic_form.format.label, comic_form.format(size=20)],
+                        [comic_form.isbn.label, comic_form.isbn(size=20)],
+                        ] %}
+
+        {{ render_form("Comic", url_for('comic'), comic_form.hidden_tag(), comic_form.search, list)}}
+        </div>
+
+    </div>    
+
+</div>
+
+{% endblock %}
+
+

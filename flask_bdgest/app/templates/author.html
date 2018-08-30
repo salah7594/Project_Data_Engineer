@@ -1,0 +1,27 @@
+{#
+
+This page contains the results for a search on the authors collection.
+In an attempt to keep the code "DRY", the header_author list which contains the titles to the table
+is stored in the dictionaries.html template file. The result table is rendered with render_table (see macros.html).
+
+#}
+
+{% from "macros.html" import render_table %}
+
+{% from "dictionaries.html" import header_author %}
+
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="container">
+	<div class="row">
+    {{ render_table(output["list_document"], header_author) }}
+    </div>
+    </div>
+
+{% endblock %}

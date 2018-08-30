@@ -1,0 +1,32 @@
+{#
+
+The information about a series are displayed as they are extracted from the database.
+
+#}
+
+{% from "macros.html" import render_card %}
+{% from "dictionaries.html" import dict_field_comic  %}
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="container">
+		<h4 class="pink-text">Comic</h4>
+		<div class="row">
+			<div class="col l8">
+				{{ render_card(output["document"], dict_field_comic) }}
+			</div>
+            <div class="col l4">
+                {% if output["document"]["image"] is defined %}
+                <img src={{ output["document"]["image"] }} class="responsive-img">
+                {% endif %}
+            </div>
+		</div>
+
+	</div>
+
+{% endblock %}

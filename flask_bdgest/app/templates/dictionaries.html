@@ -1,0 +1,48 @@
+"""
+Template file with the headers for the author, series and comic tables.
+"""
+
+{% set header_author = ["", "First name", "Last name", "Nickname", "Birthday", "Date of death"] %}
+{% set header_series = ["Name", "Author", "Genre", "Origin", "Language"] %}
+{% set header_comic = ["Title", "Series", "Author", "Scenario", "Illustration", "Editor", "Legal deposit"] %}
+
+{% set dict_field_author = {
+                            "_id": "ID",
+                            "last_name": "Last name",
+                            "first_name": "First name",
+                            "nickname": "Nickname",
+                            "full_name": "Full name",
+                            "country": "Country",
+                            "web_page": "Personal web page",
+                            "url": "URL"
+                            } %}
+
+{% set dict_field_series = {
+                            "_id": "ID",
+                            "name": "Name",
+                            "author_name": "Author",
+                            "genre": "Genre",
+                            "volume_nb": "Number of volumes",
+                            "origin": "Origin",
+                            "lang": "Language",
+                            "url": "URL"
+                            }
+%}
+
+{% set dict_field_comic = {
+                           "_id": "ID",
+                           "title": "Title",
+                           "author_name": "Author",
+                           "series_name": "Series",
+                           "scenario": "Scenario",
+                           "illustration": "Illustration",
+                           "coloring": "Coloring",
+                           "editor": "Editor",
+                           "format": "Format",
+                           "isbn": "ISBN",
+                           "pages": "Number of pages",
+                           "legal_deposit": "Legal deposit date",
+                           "url": "URL"
+                           }
+
+%}

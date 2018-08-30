@@ -1,0 +1,26 @@
+{#
+
+Same as for author.html and series.html.
+
+#}
+
+{% from "macros.html" import render_table %}
+
+{% from "dictionaries.html" import header_comic %}
+
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="container">
+	<div class="row">
+	{{ render_table(output["list_document"], header_comic) }}
+
+    </div>
+	</div>
+
+{% endblock %}

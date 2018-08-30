@@ -1,0 +1,106 @@
+{#
+
+macro: render_form
+return: form with fields and labels
+parameters:
+	- title: for the h4 title of the form
+	- action_url: redirection to the view route and function specific to the form
+	- hidden_tag: CSRF protection
+	- search: search SubmitField specific to the form
+	- list_label_field: a list of the labels and the actual StringFields of each field
+
+
+macro: render_table
+return: table of entries, URLs and redirections of a list of documents
+parameters: 
+	- list_document: list of documents (see table_series, table_comic and the content of the author route in views.py)
+	- header: list with the table's header strings
+Redirections to routes are detected with their keys which start with "redirect".
+    
+
+macro: render_card
+return: card with all the current author or series informations
+parameters: single document
+
+#}
+
+{% macro render_form(title, action_url, hidden_tag, search, list_label_field) -%}
+
+    <h4 class="pink-text">{{ title }}</h4>
+    <form action="{{ action_url }}" method="post" autocomplete="off" autofocus="autofocus" class="col s12">
+    {{ hidden_tag }}
+    <table>
+    <tr>
+        {% for x in list_label_field %}
+        <td class="col s6">{{ x[0] }} {{ x[1] }}</td>
+        {% endfor %}
+    </tr>
+
+    </table>
+    <button class="btn waves-effect waves-light center"> {{ search }}
+    </form>
+
+{%- endmacro %}
+
+{% macro render_card(document, dict_field) -%}
+
+{#
+
+		{% for key, value in document.items() %}
+            {% if key.startswith("url") %}
+            url: <a href="{{ value }}">{{ value }}</a><br>
+            {% else %}
+			{{ key }}: {{ value }}<br>
+            {% endif %}
+		{% endfor %}
+#}
+
+	<div class="card blue-grey darken-1">
+	<div class="card-content white-text">
+        {% for key, value in dict_field.items() %}
+            {% if document.get(key) %}
+                {% if key.startswith("url") %}
+                {{ value }}: <a href="{{ document[key] }}">{{ document[key] }}</a><br>
+                {% else %}
+                {{ value }}: {{ document[key] }}<br>
+                {% endif %}
+            {% endif %}
+        {% endfor%}
+	</div>
+	</div>
+
+    {% if document.get("description") %}
+    <h5>Description</h5>
+    <p>
+    {{ document["description"] }}
+    </p>
+    {% endif %}
+
+{%- endmacro %}
+
+{% macro render_table(list_document, header) -%}
+    <table class="highlight">
+        <thead>
+            <tr>
+                {% for column_name in header %}
+                <th>{{ column_name }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for document in list_document %}
+            <tr>
+                {% for key, value in document.items() %}
+                {% if key.startswith("redirect") %}
+                {# If the key starts with redirect as seen in the views.py file, it means the link sends to the specified route. #}
+                <td><a href="{{ value[0] }}">{{ value[1] }}</a></td> 
+                {% else %}
+                <td>{{ value }}</td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{%- endmacro %}
+

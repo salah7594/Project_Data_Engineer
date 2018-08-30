@@ -1,0 +1,112 @@
+{#
+
+The render_card function displays the fields of an author as they are extracted from the database.
+The visualizations require the importation of HighchartsJS libraries.
+The series and comics tables are rendered with render_table and with the list_series and list_comic from the output dictionary.
+
+#}
+
+{% from "macros.html" import render_card, render_table %}
+
+{% from "dictionaries.html" import header_author, header_series, header_comic, dict_field_author %}
+
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="container">
+		<h4 class="pink-text">Author</h4>
+		<div class="row">
+			<div class="col l8">
+				{{ render_card(output["document"], dict_field_author) }}
+			</div>
+			<div class="col l4">
+				{% if output["document"]["image"] is defined %}
+				<img src={{ output["document"]["image"] }} class="responsive-img">
+				{% endif %}
+			</div>
+		</div>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+<div id="container_line" style="height: 400px"></div>
+
+<script>
+
+Highcharts.chart('container', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Series genres'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Genres',
+        colorByPoint: true,
+        data: [
+        {%for x in output["pie"]%}
+        {name: '{{x["_id"]}}' , y: {{x["count"]|int}}    },
+        {%endfor%}
+
+        ]
+    }]
+});
+
+
+Highcharts.chart('container_line', {
+    xAxis: {
+        categories: {{ output["legal_deposit"]["year"] }}
+    },
+
+    title: {
+        text: 'Number of comics published per year'
+    },
+    series: [
+    {   name: "Number of comics", 
+        data: {{ output["legal_deposit"]["count"] }},
+        //lineWidth: 5
+    }]
+});
+
+</script>
+
+		<h4 class="pink-text">Series</h4>
+		<div class="row">
+
+			{{ render_table(output["list_series"], header_series) }}
+
+		</div>
+
+		<h4 class="pink-text">Comics</h4>
+
+			{{ render_table(output["list_comic"], header_comic) }}
+
+	</div>
+
+{% endblock %}

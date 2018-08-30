@@ -1,0 +1,34 @@
+{#
+
+The information about a series are displayed as they are extracted from the database.
+The list of comics belonging to the series are displayed with render_table and the list_comic from the output dictionary.
+
+#}
+
+{% from "macros.html" import render_card, render_table %}
+
+{% from "dictionaries.html" import header_comic, dict_field_series %}
+
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="container">
+		<h4 class="pink-text">Series</h4>
+		<div class="row">
+			<div class="col l8">
+				{{ render_card(output["document"], dict_field_series) }}
+			</div>
+		</div>
+
+		<h4 class="pink-text">Comics</h4>
+
+			{{ render_table(output["list_comic"], header_comic) }}
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{#
+
+This template is the base design for all pages. The head:
+- enables mobile device compatibility
+- imports the material design css files locally available in the static folder
+
+The navbar is also defined with a redirection to the home page when clicking on home.
+
+#}
+
+<html>
+
+{% block head %}
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../static/css/materialize.css" type="text/css" />
+	<link rel="stylesheet" href="../static/fonts/roboto/Roboto-Regular.woff" type="text/css" />
+	<!-- <link rel="stylesheet" href="../static/css/materialize.css" type="text/css" /> -->
+	<title>_</title>
+</head>
+
+<nav class="light-blue darken-2" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="{{ url_for('home') }}" class="brand-logo">Home</a>
+</nav>
+
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+
+
+</html>

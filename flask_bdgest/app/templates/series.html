@@ -1,0 +1,29 @@
+{#
+
+This page contains the results of a query on the series. The header_series is imported from the 
+dictionaries.html template file. It contains the titles for the output table.
+Indeed, since the table of series is displayed on this page, but also on an author's specific page,
+if a change has to be done, it only needs to be done in the dictionaries.html file.
+
+#}
+
+{% from "macros.html" import render_table %}
+
+{% from "dictionaries.html" import header_series %}
+
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="container">
+	<div class="row">
+	{{ render_table(output["list_document"], header_series) }}
+
+	</div>
+	</div>
+
+{% endblock %}
